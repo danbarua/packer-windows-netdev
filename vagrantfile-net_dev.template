@@ -17,11 +17,29 @@ Vagrant.configure("2") do |config|
 
     config.vm.provider "vmware_fusion" do |v|
         v.gui = true
-        v.vmx["memsize"] = "2048"
+        v.vmx["memsize"] = "4096"
+        v.vmx["numvcpus"] = "4"
+
         v.vmx["ethernet0.virtualDev"] = "vmxnet3"
         v.vmx["RemoteDisplay.vnc.enabled"] = "false"
         v.vmx["RemoteDisplay.vnc.port"] = "5900"
         v.vmx["scsi0.virtualDev"] = "lsisas1068"
+
+        #fusion performance hacks
+        v.vmx["logging"] = "FALSE"
+        v.vmx["MemTrimRate"] = "0"
+        v.vmx["MemAllowAutoScaleDown"] = "FALSE"
+        v.vmx["mainMem.backing"] = "swap"
+        v.vmx["sched.mem.pshare.enable"] = "FALSE"
+        v.vmx["snapshot.disabled"] = "TRUE"
+        v.vmx["isolation.tools.unity.disable"] = "TRUE"
+        v.vmx["unity.allowCompostingInGuest"] = "FALSE"
+        v.vmx["unity.enableLaunchMenu"] = "FALSE"
+        v.vmx["unity.showBadges"] = "FALSE"
+        v.vmx["unity.showBorders"] = "FALSE"
+        v.vmx["unity.wasCapable"] = "FALSE"
+
+        #v.vmx["snapshot.disabled"] = "TRUE"
     end
 
     #Copy Resharper license and register if environment var is set
@@ -45,4 +63,9 @@ Vagrant.configure("2") do |config|
     $git_email = `git config user.email`
     config.vm.provision "shell",
         inline: "git config --global user.email #$git_email"
+  
+    # copy user's ssh key, if present
+    ssh_key = Pathname.new("#{Dir.home}/.ssh/id_rsa");
+    config.vm.provision :shell, :inline => "Set-Content C:/Users/vagrant/.ssh/id_rsa \"#{ssh_key.read()}\"", privileged: false if ssh_key.exist?
+
 end

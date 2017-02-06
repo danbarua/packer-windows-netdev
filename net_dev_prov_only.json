@@ -1,0 +1,22 @@
+{
+	"builders": [
+		{
+		  "type": "vmware-vmx",
+		  "source_path": "vm/packer-vmware-iso.vmx",
+		  "ssh_username": "vagrant",
+		  "ssh_password": "vagrant",
+	        "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+			"headless": false,
+	        "boot_wait": "2m",
+            "ssh_wait_timeout": "2m"
+		}
+	],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "net_dev_{{.Provider}}.box",
+            "vagrantfile_template": "vagrantfile-net_dev.template"
+        }
+    ]
+}

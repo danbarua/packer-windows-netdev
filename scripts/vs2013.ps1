@@ -1,37 +1,20 @@
 Write-Host "Installing Visual Studio"
-$isoPath = "C:\users\vagrant\en_visual_studio_premium_2013_x86_dvd_3175275.iso"
+$isoPath = "C:\users\vagrant\vs2013.4_pro_enu.iso" #"C:\users\vagrant\en_visual_studio_professional_2013_with_update_2_x86_dvd_4238045.iso"
 $rc = Mount-DiskImage -PassThru -ImagePath $isoPath
 $driveLetter = ($rc | Get-Volume).DriveLetter
-$installPath = Join-Path "${driveLetter}:" "vs_premium.exe"
+$installPath = Join-Path "${driveLetter}:" "vs_professional.exe"
 Start-Process -FilePath $installPath -ArgumentList "/adminfile A:\AdminDeployment.xml /quiet /norestart" -NoNewWindow -Wait
 Dismount-DiskImage -ImagePath $isoPath
 Remove-Item -Force -Path $isoPath 
 
 
-Write-Host "Installing Visual Studio Update 1"
-$isoPath = "C:\Users\vagrant\VS2013.1.iso"
-$rc = Mount-DiskImage -PassThru -ImagePath $isoPath
-$driveLetter = ($rc | Get-Volume).DriveLetter
-$installPath = Join-Path "${driveLetter}:" "VS2013.1.exe"
-Start-Process -FilePath $installPath -ArgumentList "/quiet /norestart" -NoNewWindow -Wait
-Dismount-DiskImage -ImagePath $isoPath
-Remove-Item -Force -Path $isoPath
-
-
 Write-Host "Installing Resharper"
-$resharperInstallerPath = "C:\Users\vagrant\ReSharperSetup.8.2.0.2160.msi"
+$resharperInstallerPath = "C:\Users\vagrant\ReSharperSetup.8.2.3000.5176.msi"
 Start-Process -FilePath $resharperInstallerPath -ArgumentList "/qn" -Wait
 Remove-Item -Force -Path $resharperInstallerPath
 
 
-Write-Host "Installing the Hide Main Menu VSIX"
-$vsixInstallerPath = "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\VSIXInstaller.exe"
-$extensionPath = "c:\users\vagrant\HideMenu.vsix"
-Start-Process -FilePath $vsixInstallerPath -ArgumentList "/q $extensionPath" -NoNewWindow -Wait
-Remove-Item -Force -Path $extensionPath
-
-
-Write-Host "Configuring Resharper to use the IntelliJ Keyboard Scheme"
+Write-Host "Configuring Resharper to use the VisualStudio Keyboard Scheme"
 $dotSettingsSource = "C:\Users\vagrant\vsActionManager.DotSettings"
 $dotSettingsDestination = "C:\Users\vagrant\AppData\Local\JetBrains\ReSharper\vAny\vs12.0"
 New-Item $dotSettingsDestination -Type directory
@@ -65,6 +48,7 @@ New-ItemProperty -Force -Path HKCU:\Software\Microsoft\VisualStudio\12.0\General
 New-Item -Force -Path HKCU:\Software\Microsoft\VisualStudio\12.0\General\StartPage
 New-ItemProperty -Force -Path HKCU:\Software\Microsoft\VisualStudio\12.0\General\StartPage -Name IsDownloadRefreshEnabled -Type DWord -Value 0
 New-ItemProperty -Force -Path HKCU:\Software\Microsoft\VisualStudio\12.0\General\StartPage -Name OptIn -Type DWord -Value 0
+
 
 #We register ReSharper in the box VagrantFile instead of here as it's
 # a per user setting which comes from an environment variable.

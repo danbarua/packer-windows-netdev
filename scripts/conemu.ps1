@@ -1,4 +1,4 @@
-$conemuSetup = "C:\Users\vagrant\ConEmuSetup.140422.exe"
+$conemuSetup = "C:\Users\vagrant\ConEmuSetup.140602.exe"
 $conemuArgs = '/p:x64 /quiet ADDLOCAL="FConEmuGui,FConEmuGui64,ProductFeature,FConEmuBase32,FConEmuBase,FConEmuBase64,FConEmuCmdExt,FConEmuDocs,FCEShortcutStart"'
 
 Write-Host "Installing ConEmu"

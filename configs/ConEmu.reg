@@ -547,7 +547,7 @@ Windows Registry Editor Version 5.00
 "Count"=dword:00000000
 
 [HKEY_CURRENT_USER\Software\ConEmu\.Vanilla\Tasks]
-"Count"=dword:00000004
+"Count"=dword:00000007
 
 [HKEY_CURRENT_USER\Software\ConEmu\.Vanilla\Tasks\Task1]
 "Name"="{Development}"
@@ -583,6 +583,31 @@ Windows Registry Editor Version 5.00
 "Cmd1"="%systemroot%\\SysWOW64\\cmd.exe /c \"\"%ProgramFiles(x86)%\\Git\\bin\\sh.exe\" --login -i\" \"-cur_console:t:Git Bash\" "
 "Active"=dword:00000000
 "Count"=dword:00000001
+"Hotkey"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\ConEmu\.Vanilla\Tasks\Task5]
+"Name"="{cmd}"
+"GuiArgs"="/single /Dir %userprofile%"
+"Cmd1"="cmd.exe"
+"Active"=dword:00000000
+"Count"=dword:00000001
+"Hotkey"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\ConEmu\.Vanilla\Tasks\Task6]
+"Name"="{cmd (admin)}"
+"GuiArgs"="/single /Dir %userprofile%"
+"Cmd1"="cmd.exe -new_console:a"
+"Active"=dword:00000000
+"Count"=dword:00000001
+"Hotkey"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\ConEmu\.Vanilla\Tasks\Task7]
+"Name"="{cmd 64/32}"
+"GuiArgs"="/Dir %userprofile%"
+"Cmd1"="*\"\%SystemRoot%\\System32\\cmd.exe\" /k ver ; echo This is Native cmd.exe"
+"Cmd2"="*\"\%SystemRoot%\\SysWow64\\cmd.exe\" /k ver ; echo this is 32 bit cmd.exe -new_console:s50v"
+"Active"=dword:00000000
+"Count"=dword:00000002
 "Hotkey"=dword:00000000
 
 [HKEY_CURRENT_USER\Software\ConEmu\shell]
